@@ -1,0 +1,280 @@
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  line-height: 2;
+  font-family: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
+  color: black;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 0.5em;
+}
+
+
+a {
+  text-decoration: none;
+  transition: opacity 0.3s;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+section,
+article {
+  max-width: 1140px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+
+
+
+
+
+/*-------------------------------------------
+ ヘッダー・フッター
+-------------------------------------------*/
+
+header{
+  /*headerを全画面で見せる*/
+width:100%;
+height: 100vh;
+position: relative;
+
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.menubar {
+  font-family: 'Poppins';
+  height: 60px;
+  width: 100%;
+  z-index: 10;
+  max-width: 100%;
+  position: fixed;
+  width: 100%;
+  z-index: 10000;
+  /* background-color: rgb(0,0,0,0.25); */
+
+}
+
+.menubar ul {
+  margin: 0;
+  height: 100%;
+  display: flex;
+}
+
+.menubar a {
+  color: rgb(210, 212, 205);
+  font-weight: bold;
+  font-size: 18px;
+  display: block;
+  padding: 0.8em;
+}
+
+
+
+
+
+.menubar ul {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+
+
+
+
+/*-------------------------------------------
+ Hero
+-------------------------------------------*/
+/* kv */
+.kv{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kv h1 {
+  font-size: 38px;
+  letter-spacing: 0.1em;
+  margin-top: 0;
+  color: #fff;
+}
+
+
+
+/* video */
+.video{
+  width: 100%;
+  height: 100vh;
+  /* background: url(../img/kv-alternative.jpg) no-repeat center/cover; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+
+
+.video video{
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.overlay {
+  position: relative;
+  background-color: rgba(2,2,5,0.82);
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+
+
+
+.hero {
+  font-family: 'Poppins';
+}
+
+
+
+.hero p {
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.5;
+  font-weight: bold;
+  letter-spacing: 0.01em;
+  margin-top: 0;
+}
+
+
+/*-------------------------------------------
+コンテナ
+-------------------------------------------*/
+
+.container {
+  max-width: 1200px;
+  padding:24px;
+  margin: 0 auto;
+
+}
+
+.container img {
+  display: block;
+}
+
+.container h2 {
+  font-family: 'Poppins';
+  text-align: center
+}
+
+/*-------------------------------------------
+WhatisPB
+-------------------------------------------*/
+.whatIsPB {
+  background: url(../img/fletboard.png) no-repeat center/cover;
+  position: relative;
+  z-index: -1;
+}
+
+.whatIsPB::before{
+  background: rgba(255, 255, 255, 0.6);
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.sentence {
+  width:100%;
+}
+
+.sentence img {
+  display: none;
+}
+
+
+@media screen and (min-width: 1024px) {
+
+  .whatIsPB{
+    background-image: none;
+    }
+
+  .sentence{
+    display:flex;
+    justify-content: space-between;
+  }
+
+  .boxitem img {
+    display: block;
+    width: 100%;
+  }
+
+  .boxitem {
+    width: 48%;
+  }
+}
+
+
+
+
+
+
+
+
+
+/*-------------------------------------------
+footer
+-------------------------------------------*/
+
+footer {
+  background-color: #fff;
+  padding: 70px 0 10px;
+  text-align: center;
+  font-size: 10px;
+}
