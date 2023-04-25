@@ -1,0 +1,471 @@
+/* 全体 */
+html {
+  scroll-padding-top: 200px; /* 固定ヘッダの高さ分 */
+}
+
+body {
+  font-family: "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic";
+  font-weight: 500;
+}
+
+body p {
+  line-height: 1.8;
+}
+
+a {
+  color: #000;
+}
+
+.title {
+  font-size: 24px;
+  margin-top: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+  font-weight: bold;
+}
+
+.container {
+  max-width: 800px;
+  padding: 0px 40px 16px 40px;
+  margin: 0 auto;
+}
+
+.heading-title {
+  font-family: 'Secular One';
+  font-size: 23px;
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+li {
+  line-height: 2.2;
+}
+
+.fab {
+  color: black;
+  font-size: 18px;
+}
+
+
+/*-------------------------------------------
+ ヘッダー
+-------------------------------------------*/
+header {
+  font-family: 'Secular One';
+  position: fixed;
+  width: 100%;
+  background-color:white;
+  z-index: 999;
+}
+
+
+.header-contents {
+  display: flex;
+  align-items: flex-end;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.header-logo {
+  margin: 0 auto;
+}
+
+.header-button {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  width: 75px;
+  height: 75px;
+  background-color: transparent;
+  z-index: 999;
+}
+
+.header-button .icon {
+  display: block;
+  position: relative;
+  top: 0;
+  margin: 0 auto;
+  width: 24px;
+  height: 2px;
+  background-color: #333;
+  transition: .3s ease;
+}
+
+.header-button .icon:before,
+.header-button .icon:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  transition: all .3s;
+  background-color: #333;
+
+}
+
+.header-button .icon:before {
+  top: -8px;
+}
+
+.header-button .icon:after {
+  top: 8px;
+}
+
+.header-gnav {
+  position: fixed;
+  right: 0;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  transform: translateX(100%);
+  transition: .3s ease;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.header-gnav ul {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 999;
+}
+
+.header-gnav a,
+.header-gnav p {
+  color: #333;
+  font-weight: bold;
+  font-size: 18px;
+  display: inline-block;
+  padding: 0.8em;
+}
+
+.currentpage {
+    text-decoration:underline;/*下線を引く*/
+    text-decoration-color:#bb1414;
+}
+
+.open .header-button .icon {
+  background-color: transparent;
+}
+
+.open .header-button .icon:before,
+.open .header-button .icon:after {
+  top: 0;
+}
+
+.open .header-button .icon:before {
+  transform: rotate(45deg);
+}
+
+.open .header-button .icon:after {
+  transform: rotate(-45deg);
+}
+
+.open .header-gnav {
+  transform: translateX(0);
+}
+
+.top .icon {
+  background-color: #eee;
+}
+
+.top .icon:before,
+.top .icon:after {
+  background-color: #eee;
+}
+
+.top.open .icon {
+  background-color: transparent;
+}
+
+.top.open .icon:before,
+.top.open .icon:after {
+  background-color: #000;
+}
+
+@media screen and (min-width: 768px) {
+  header {
+    align-items: center;
+  }
+
+  .header-button {
+    display: none;
+  }
+
+  .header-gnav {
+    margin-right: -0.8em;
+    transform: translateX(0);
+    position: relative;
+    background: none;
+  }
+
+  .header-gnav ul {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+
+
+/*-------------------------------------------
+ メインビジュアル
+-------------------------------------------*/
+.hero {
+  padding-top: 80px;
+}
+
+.mainphoto {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .mainphoto {
+    display: none;
+  }
+
+  .hero {
+    background-image: url("../images/wanggung.jpg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    height: 600px;
+  }
+}
+
+
+/*-------------------------------------------
+BIOGRAPHY
+-------------------------------------------*/
+#biography {
+  padding-top: 80px;
+  margin-top: -80px;
+}
+
+.membersintro {
+  margin-top: 20px;
+  font-family: 'Secular One';
+}
+
+
+/*-------------------------------------------
+LIVE
+-------------------------------------------*/
+#schedule {
+  padding-top: 80px;
+  margin-top: -80px;
+}
+
+
+.schedule ul li {
+  display: block;
+  font-size: 14px;
+  font-weight: 700px;
+  letter-spacing: 0.1em;
+}
+
+.schedule ul li h3 {
+  cursor: pointer;
+  position: relative;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  font-size: 13px;
+  margin-bottom: 10px;
+  background-color: rgba(65, 65, 65, 0.173);
+  padding: 10px 20px;
+  line-height: 1.8;
+}
+
+.schedule ul li h3:hover {
+  opacity: 0.7;
+}
+
+.schedule ul li p {
+  margin-top: 10px;
+}
+
+.pref {
+  font-size: 26px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.schedule ul li .date {
+  font-weight: 700;
+  display: block;
+}
+
+.schedule ul li h3::before,
+.schedule ul li h3::after {
+  transition-duration: .3s;
+  content: "";
+  position: absolute;
+  bottom: 20px;
+  right: 10px;
+  width: 12px;
+  height: 2px;
+  background-color: #333;
+}
+
+.schedule ul li h3::after {
+  transform: rotate(90deg);
+}
+
+.schedule ul li h3.open::after {
+  transform: unset;
+}
+
+.schedule ul li .cont {
+  padding-top: 1px;
+}
+
+.schedule ul li .line {
+  margin: 20px 0;
+  border-bottom: 1px solid #d1d1d1;
+}
+
+.schedule ul li .cont {
+  display: none;
+  transition-duration: unset;
+}
+
+
+.schedule ul li .date {
+  display: block;
+}
+
+
+.scheduleflex {
+  display: flex;
+}
+
+
+.cont img {
+  max-width: 100%;
+  margin: 0 auto;
+  padding-bottom: 10px;
+}
+
+/*-------------------------------------------
+MUSIC
+-------------------------------------------*/
+#music {
+  padding-top: 80px;
+  margin-top: -80px;
+}
+
+
+/* .disc {
+  background-color: aquamarine;
+} */
+
+.disc img {
+  max-width: 300px;
+  max-height: 300px;
+  display: block;
+  margin: 0 auto;
+  border: rgb(216, 216, 216) 1px solid;
+}
+
+.aboutdisco {
+  /* background-color: aquamarine; */
+  font-size: 13px;
+}
+
+.aboutdisco li {
+  line-height: 1.8;
+}
+
+.aboutdisco i {
+  /* background-color: aqua; */
+  font-size: 28px;
+  margin-right: 10px;
+}
+
+.aboutdisco a {
+  font-size: 18px;
+
+}
+
+.otherdistro {
+  text-decoration: underline;
+}
+
+.distros {
+  margin-top: 10px;
+  /* background-color: #bb1414; */
+  display: flex;
+}
+
+@media screen and (min-width: 768px) {
+
+  .disc img {
+    margin: 0 0;
+    max-width: 380px;
+    max-height: 380px;
+  }
+
+  .disc {
+    display: flex;
+    justify-content: center;
+  }
+
+  .aboutdisco {
+    padding-left: 30px;
+  }
+
+
+}
+
+/*-------------------------------------------
+VIDEO
+-------------------------------------------*/
+#video {
+  padding-top: 80px;
+  margin-top: -80px;
+}
+
+.youtube {
+  max-width: 380px;
+  height: 220px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+
+
+@media screen and (min-width: 768px) {
+  .youtube {
+    max-width: 30%;
+    height: 170px;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .videos {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+
+
+
+/*-------------------------------------------
+ フッター
+-------------------------------------------*/
+
+footer {
+  font-family: 'Secular One';
+  margin: 30px;
+  text-align: center;
+  font-size: 12px;
+}
