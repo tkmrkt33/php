@@ -14,6 +14,8 @@ $image_name = '';
 <head>
     <meta charset="UTF-8">
     <title>WORK30</title>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
@@ -36,7 +38,7 @@ $image_name = '';
             $updir = "./img";
             $tmp_file = @$_FILES['upload_image']['tmp_name'];
             @list($file_name, $file_type) = explode(".", @$_FILES['upload_image']['name']);
-            $copy_file = $_POST['title'] . "." . $file_type;
+            $copy_file = $_POST['title'] ."-".date("Ymd-H-i-s"). "." . $file_type;
             if (is_uploaded_file($_FILES["upload_image"]["tmp_name"])) {
                 if (move_uploaded_file($tmp_file, "$updir/$copy_file")) {
                     chmod("img/" . $_FILES["upload_image"]["name"], 0644);
@@ -46,11 +48,6 @@ $image_name = '';
             } else {
                 echo "ファイルが選択されていません。";
             }
-
-
-
-
-            $image_name = $_POST['title'];
 
 
             // (2)データベースと接続
@@ -69,7 +66,7 @@ $image_name = '';
             $stmt = $mysqli->prepare('INSERT INTO imagepost (image_name) VALUES (?)');
 
             // (5)登録するデータをセット
-            $stmt->bind_param('s', $image_name);
+            $stmt->bind_param('s', $copy_file);
 
             // (6)登録実行
             $stmt->execute();
@@ -110,8 +107,8 @@ $image_name = '';
 
 
 
-    <section class="images">
-        <ul>
+    <div class="images">
+
             <?php
             // データベースへ接続
             $db = new mysqli($host, $login_user, $password, $database);
@@ -122,11 +119,14 @@ $image_name = '';
                 $db->set_charset("utf8"); //文字コードをUTF8に設定
             }
             //SELECT文の実行
-            $sql = "SELECT image_name FROM imagepost ";
+            $sql = "SELECT image_name FROM imagepost ORDER BY create_date DESC ";
             if ($result = $db->query($sql)) {
                 // 連想配列を取得
                 while ($row = $result->fetch_assoc()) {
-                    echo '<img src="img/' . $row["image_name"] . '.jpg">';
+                    echo '<div class="img_caption">';
+                    echo '<p>'.$row["image_name"].'</p>';
+                    echo '<img src="img/' . $row["image_name"] . '">';
+                    echo '</div>';
                 }
                 // 結果セットを閉じる
                 $result->close();
@@ -135,7 +135,6 @@ $image_name = '';
             $db->close(); // 接続を閉じる
             ?>
 
-        </ul>
 
 
 
