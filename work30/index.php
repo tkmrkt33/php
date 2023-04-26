@@ -1,3 +1,13 @@
+<?php
+$host = 'mysql34.conoha.ne.jp';
+$login_user = 'bcdhm_nagoya_pf0008';
+$password = 'r4Lv,Kw~';
+$database = 'bcdhm_nagoya_pf0008';
+$error_msg = [];
+$image_id = '';
+$image_name = '';
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -9,20 +19,11 @@
 <body>
     <p>画像投稿</p>
 
-    <form method="post" enctype="multipart/form-data">
-        画像名：<input type="text" name="title"><br><br>
-
-        画像　：<input type="file" name="upload_image" accept="image/*"><br>
-
-        <input type="submit" name="submitbtn" value="画像投稿"><br>
-    </form>
-
-
     <?php
     if (isset($_POST['submitbtn']) === true) { //submitbtnが押された場合の分岐
     
-        //title,mainどちらかemptyなら情報不足を表示
-        if (empty($_POST['title']) === true || empty($_POST['main']) === true) {
+        //titleがemptyなら情報不足を表示
+        if (empty($_POST['title']) === true) {
             print '<b>入力情報が不足しています</b>';
         } else { //両方入力されている場合
     
@@ -31,41 +32,112 @@
                 echo 'ファイルが送信されていません。';
                 exit;
             }
-            $save = 'img/' . basename($_FILES['upload_image']['name']);
 
-
-
-            //ファイルを保存先ディレクトリに移動させる
-            if (move_uploaded_file($_FILES['upload_image']['tmp_name'], $save)) {
-                echo 'アップロード成功しました。';
+            $updir = "./img";
+            $tmp_file = @$_FILES['upload_image']['tmp_name'];
+            @list($file_name, $file_type) = explode(".", @$_FILES['upload_image']['name']);
+            $copy_file = $_POST['title'] . "." . $file_type;
+            if (is_uploaded_file($_FILES["upload_image"]["tmp_name"])) {
+                if (move_uploaded_file($tmp_file, "$updir/$copy_file")) {
+                    chmod("img/" . $_FILES["upload_image"]["name"], 0644);
+                } else {
+                    echo "ファイルをアップロード出来ませんでした。";
+                }
             } else {
-                echo 'アップロード失敗しました。';
+                echo "ファイルが選択されていません。";
             }
 
-            $title = $_POST['title'];
-            $main = $_POST['main'];
 
 
-            $data = "<li>" . $title . ":" . $main . "<br><img src=" . $save . " width='150px'></li>";
-            $submit_file = 'submissions.txt';
 
-            // dataをtxtファイルの先頭に書き込む処理
-            $newpost = file_get_contents($submit_file);
-            $newpost = $data . $newpost;
-            file_put_contents($submit_file, $newpost);
-            fclose($fp);
+            $image_name = $_POST['title'];
 
+
+            // (2)データベースと接続
+            $mysqli = new mysqli($host, $login_user, $password, $database);
+
+            if ($mysqli->connect_errno) {
+                echo $mysqli->connect_errno . ' : ' . $mysqli->connect_error;
+            }
+
+            $mysqli->begin_transaction(); // トランザクション開始
+    
+            // (3)文字コードを設定
+            $mysqli->set_charset("utf8");
+
+            // (4)プリペアドステートメントの用意
+            $stmt = $mysqli->prepare('INSERT INTO imagepost (image_name) VALUES (?)');
+
+            // (5)登録するデータをセット
+            $stmt->bind_param('s', $image_name);
+
+            // (6)登録実行
+            $stmt->execute();
+
+            //$error_msg[] = '強制的にエラーメッセージを挿入';
+    
+            //エラーメッセージ格納の有無によりトランザクションの成否を判定
+            if (count($error_msg) == 0) {
+                echo '更新完了！';
+                $mysqli->commit(); // 正常に終了したらコミット
+            } else {
+                echo '更新が失敗しました。';
+                $mysqli->rollback(); // エラーが起きたらロールバック
+            }
+            // 下記はエラー確認用。エラー確認が必要な際にはコメントを外してください。
+            var_dump($error_msg);
+
+
+            $mysqli->close(); // 接続を閉じる
+    
             header("Location:./index.php");
             exit;
         }
+
     } else {
     }
 
-
     ?>
 
+    <form method="post" enctype="multipart/form-data">
+        画像名：<input type="text" name="title"><br>
 
-<p>画像一覧</p>
+        画像　：<input type="file" name="upload_image"><br>
+
+        <input type="submit" name="submitbtn" value="画像投稿"><br>
+    </form>
+
+
+
+
+    <section class="images">
+        <ul>
+            <?php
+            // データベースへ接続
+            $db = new mysqli($host, $login_user, $password, $database);
+            if ($db->connect_error) {
+                echo $db->connect_error;
+                exit();
+            } else {
+                $db->set_charset("utf8"); //文字コードをUTF8に設定
+            }
+            //SELECT文の実行
+            $sql = "SELECT image_name FROM imagepost ";
+            if ($result = $db->query($sql)) {
+                // 連想配列を取得
+                while ($row = $result->fetch_assoc()) {
+                    echo '<img src="img/' . $row["image_name"] . '.jpg">';
+                }
+                // 結果セットを閉じる
+                $result->close();
+            }
+
+            $db->close(); // 接続を閉じる
+            ?>
+
+        </ul>
+
+
 
 
 </body>
