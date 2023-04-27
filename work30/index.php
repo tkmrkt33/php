@@ -19,7 +19,7 @@ $image_name = '';
 </head>
 
 <body>
-    <p>画像投稿</p>
+    <h1>画像投稿</h1>
 
     <?php
     if (isset($_POST['submitbtn']) === true) { //submitbtnが押された場合の分岐
@@ -38,7 +38,7 @@ $image_name = '';
             $updir = "./img";
             $tmp_file = @$_FILES['upload_image']['tmp_name'];
             @list($file_name, $file_type) = explode(".", @$_FILES['upload_image']['name']);
-            $copy_file = $_POST['title'] ."-".date("Ymd-H-i-s"). "." . $file_type;
+            $copy_file = $_POST['title'] . "-" . date("Ymd-H-i-s") . "." . $file_type;
             if (is_uploaded_file($_FILES["upload_image"]["tmp_name"])) {
                 if (move_uploaded_file($tmp_file, "$updir/$copy_file")) {
                     chmod("img/" . $_FILES["upload_image"]["name"], 0644);
@@ -49,6 +49,9 @@ $image_name = '';
                 echo "ファイルが選択されていません。";
             }
 
+
+
+            $image_name = $_POST['title'];
 
             // (2)データベースと接続
             $mysqli = new mysqli($host, $login_user, $password, $database);
@@ -63,10 +66,10 @@ $image_name = '';
             $mysqli->set_charset("utf8");
 
             // (4)プリペアドステートメントの用意
-            $stmt = $mysqli->prepare('INSERT INTO imagepost (image_name) VALUES (?)');
+            $stmt = $mysqli->prepare('INSERT INTO imagepost (image_name,file_name) VALUES (?,?)');
 
             // (5)登録するデータをセット
-            $stmt->bind_param('s', $copy_file);
+            $stmt->bind_param('ss', $image_name, $copy_file);
 
             // (6)登録実行
             $stmt->execute();
@@ -109,31 +112,31 @@ $image_name = '';
 
     <div class="images">
 
-            <?php
-            // データベースへ接続
-            $db = new mysqli($host, $login_user, $password, $database);
-            if ($db->connect_error) {
-                echo $db->connect_error;
-                exit();
-            } else {
-                $db->set_charset("utf8"); //文字コードをUTF8に設定
+        <?php
+        // データベースへ接続
+        $db = new mysqli($host, $login_user, $password, $database);
+        if ($db->connect_error) {
+            echo $db->connect_error;
+            exit();
+        } else {
+            $db->set_charset("utf8"); //文字コードをUTF8に設定
+        }
+        //SELECT文の実行
+        $sql = "SELECT image_name,file_name FROM imagepost WHERE public_flg = '1' ORDER BY create_date DESC ";
+        if ($result = $db->query($sql)) {
+            // 連想配列を取得
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="img_caption">';
+                echo '<p>' . $row["image_name"] . '</p>';
+                echo '<img src="img/' . $row["file_name"] . '">';
+                echo '</div>';
             }
-            //SELECT文の実行
-            $sql = "SELECT image_name FROM imagepost ORDER BY create_date DESC ";
-            if ($result = $db->query($sql)) {
-                // 連想配列を取得
-                while ($row = $result->fetch_assoc()) {
-                    echo '<div class="img_caption">';
-                    echo '<p>'.$row["image_name"].'</p>';
-                    echo '<img src="img/' . $row["image_name"] . '">';
-                    echo '</div>';
-                }
-                // 結果セットを閉じる
-                $result->close();
-            }
+            // 結果セットを閉じる
+            $result->close();
+        }
 
-            $db->close(); // 接続を閉じる
-            ?>
+        $db->close(); // 接続を閉じる
+        ?>
 
 
 
