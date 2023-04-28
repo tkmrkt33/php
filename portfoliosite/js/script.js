@@ -1,22 +1,23 @@
 
+
 $('a[href*="#"]').click(function () {//全てのページ内リンクに適用させたい場合はa[href*="#"]のみでもOK
 	var elmHash = $(this).attr('href'); //ページ内リンクのHTMLタグhrefから、リンクされているエリアidの値を取得
 	var pos = $(elmHash).offset().top;	//idの上部の距離を取得
-	$('body,html').animate({scrollTop: pos}, 500); //取得した位置にスクロール。500の数値が大きくなるほどゆっくりスクロール
+	$('body,html').animate({ scrollTop: pos }, 500); //取得した位置にスクロール。500の数値が大きくなるほどゆっくりスクロール
 	return false;
 });
 
-    $(function () {
-        $(".slide-items").slick({
-            dots: true, // インジケーター
-            autoplay:true,
-            slidesToShow:1,
-            infinite:true,
-            slidesToScroll:1,
-            speed: 800,
-          });
-      });
-      
+$(function () {
+	$(".slide-items").slick({
+		dots: true, // インジケーター
+		autoplay: true,
+		slidesToShow: 1,
+		infinite: true,
+		slidesToScroll: 1,
+		speed: 800,
+	});
+});
+
 
 //テキストのカウントアップ+バーの設定
 var bar = new ProgressBar.Line(splash_text, {//id名を指定
@@ -33,13 +34,13 @@ var bar = new ProgressBar.Line(splash_text, {//id名を指定
 			top: '50%',
 			padding: '0',
 			margin: '-30px 0 0 0',//バーより上に配置
-			transform:'translate(-50%,-50%)',
-			'font-size':'1rem',
+			transform: 'translate(-50%,-50%)',
+			'font-size': '1rem',
 			color: '#fff',
 		},
 		autoStyleContainer: false //自動付与のスタイルを切る
 	},
-	step: function(state, bar) {
+	step: function (state, bar) {
 		bar.setText(Math.round(bar.value() * 100) + ' %'); //テキストの数値
 	}
 });

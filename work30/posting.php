@@ -126,6 +126,7 @@ $image_name = '';
         if ($result = $db->query($sql)) {
             // 連想配列を取得
             while ($row = $result->fetch_assoc()) {
+                $idForWhere = $row["image_id"];
                 echo '<div class="img_caption">';
                 echo '<p>' . $row["image_name"] . '</p>';
                 echo '<img src="img/' . $row["file_name"] . '">';
@@ -134,7 +135,7 @@ $image_name = '';
                     echo '<input type="submit" name="prvbtn" value="非公開にする">';
                     if (isset($_POST['prvbtn']) === true) { //prvbtnが押された場合の分岐
                         $mysqli = new mysqli($host, $login_user, $password, $database);
-                        $update = "UPDATE imagepost SET public_flg = 0 WHERE image_id = 1;";
+                        $update = "UPDATE imagepost SET public_flg = 0 WHERE image_id = ".$idForWhere." ";
                         $mysqli->close(); // 接続を閉じる
                         header("Location:./posting.php");
                         exit;
@@ -146,7 +147,7 @@ $image_name = '';
                     if (isset($_POST['openbtn']) === true) { //openbtnが押された場合の分岐
                         $mysqli = new mysqli($host, $login_user, $password, $database);
 
-                        $update = "UPDATE imagepost SET public_flg = 1 image_id = 1;";
+                        $update = "UPDATE imagepost SET public_flg = 1 image_id = ".$idForWhere." ";
                         $mysqli->close(); // 接続を閉じる
                         header("Location:./posting.php");
                         exit;
@@ -181,7 +182,7 @@ $image_name = '';
             $update = "UPDATE imagepost SET public_flg = 1 WHERE image_id = 4";
 
 
-            
+
 
 
 

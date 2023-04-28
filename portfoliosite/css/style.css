@@ -62,6 +62,7 @@ height: 100%;
 background:#333;
 text-align:center;
 color:#fff;
+overflow: hidden;
 }
 
 /* Loadingバー中央配置　*/
