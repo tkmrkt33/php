@@ -257,7 +257,7 @@ ABOUT
 
 .slide-items img {
   margin: 0 auto;
-  width: 84%;
+  width: 68%;
   object-fit: cover;
 }
 
@@ -271,8 +271,9 @@ footer
 -------------------------------------------*/
 
 footer {
-  background-color: #fff;
-  padding: 70px 0 10px;
+  background-color:#333;
+  color: #fff;
+  padding: 20px 0 15px 0;
   text-align: center;
   font-size: 10px;
 }

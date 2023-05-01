@@ -491,6 +491,10 @@ CONTACT
   box-sizing: border-box;
 }
 
+.message {
+  height: 100px;
+}
+
 .submitbtn {
   text-align: center;
   margin-top: 20px;
@@ -499,7 +503,7 @@ CONTACT
 
 .btn {
   display: inline-block;
-  background-color: #81bdce;
+  background-color: #303434;
   box-shadow: 0 4px #818694;
   border: none;
   border-radius: 4px;
